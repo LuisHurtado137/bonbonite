@@ -1,7 +1,6 @@
 package org.luis.tests;
 
 import org.luis.pages.BasePage;
-import org.luis.utils.ConfigReader;
 import org.luis.utils.DriverFactory;
 import org.openqa.selenium.WebDriver;
 import org.testng.SkipException;
@@ -15,7 +14,6 @@ public abstract class BaseTest {
     public void setUp() {
         DriverFactory.initDriver();
         driver = DriverFactory.getDriver();
-        // Ya no navega aquí: cada test abre solo la página que necesita.
     }
 
     @AfterMethod
@@ -23,7 +21,6 @@ public abstract class BaseTest {
         DriverFactory.quitDriver();
     }
 
-    /** Marca el test como SKIPPED si el servidor respondió 403 (bloqueo por firewall). */
     protected void skipIfBlocked(BasePage page) {
         if (page.isBlockedByServer()) {
             throw new SkipException("El servidor respondió 403 Forbidden: bloqueo por firewall, "

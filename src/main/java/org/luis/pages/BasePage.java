@@ -50,7 +50,6 @@ public abstract class BasePage {
         new Actions(driver).moveToElement(element).perform();
     }
 
-    /** Marca o desmarca un checkbox solo si su estado actual es distinto al deseado. */
     protected void setCheckbox(By locator, boolean shouldBeChecked) {
         WebElement checkbox = wait.until(ExpectedConditions.presenceOfElementLocated(locator));
         if (checkbox.isSelected() != shouldBeChecked) {
@@ -58,12 +57,6 @@ public abstract class BasePage {
         }
     }
 
-    /**
-     * Selecciona una opción por su texto visible en un <select>.
-     * Si el select está reemplazado por Select2 (como País y Departamento en WooCommerce),
-     * interactúa con el componente visible de Select2 en lugar del <select> oculto.
-     * Espera a que la opción exista, así funciona con listas que cargan por AJAX (Ciudad).
-     */
     protected void selectOption(String selectId, String optionText) {
         By select2Container = By.id("select2-" + selectId + "-container");
 
@@ -86,11 +79,9 @@ public abstract class BasePage {
         try {
             wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
         } catch (TimeoutException ignored) {
-            // Si no desaparece, el siguiente paso fallará con un error más claro
         }
     }
 
-    // ---------- Estados (devuelven true/false, nunca hacen assert) ----------
 
     protected boolean isDisplayed(By locator) {
         try {
@@ -121,17 +112,11 @@ public abstract class BasePage {
         return title.contains("403") || title.toLowerCase().contains("forbidden");
     }
 
-    // ---------- Navegación ----------
 
     public void goBack() {
         driver.navigate().back();
     }
 
-    // ---------- Datos del navegador ----------
-
-    public String getPageTitle() {
-        return driver.getTitle();
-    }
 
     public String getCurrentUrl() {
         return driver.getCurrentUrl();
